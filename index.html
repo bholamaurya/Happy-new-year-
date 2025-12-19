@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>नव वर्ष 2026</title>
+
+<style>
+body{
+    margin:0;
+    padding:0;
+    background: radial-gradient(circle at bottom, #020024, #000);
+    color:#fff;
+    font-family: Arial, sans-serif;
+    text-align:center;
+    overflow:hidden;
+}
+.container{
+    position:relative;
+    z-index:2;
+    padding:40px 15px;
+}
+.year{
+    font-size:100px;
+    font-weight:900;
+    color:#ffd700;
+    text-shadow:0 0 20px #ff9800,0 0 40px #ff5722;
+    animation:pulse 2s infinite;
+}
+@keyframes pulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.1);}
+}
+h1{
+    font-size:26px;
+    margin:10px 0;
+}
+.message{
+    font-size:20px;
+    margin-top:10px;
+}
+.sender{
+    font-size:22px;
+    margin-top:10px;
+    color:#00e5ff;
+    font-weight:bold;
+}
+input{
+    margin-top:25px;
+    padding:12px;
+    width:80%;
+    max-width:300px;
+    font-size:16px;
+    border-radius:8px;
+    border:none;
+    outline:none;
+}
+.share{
+    margin-top:25px;
+}
+.share img{
+    width:55px;
+    margin:0 10px;
+    cursor:pointer;
+}
+.firework{
+    position:absolute;
+    bottom:0;
+    width:4px;
+    height:4px;
+    background:#fff;
+    border-radius:50%;
+    animation:fly 2s linear infinite;
+}
+@keyframes fly{
+    0%{transform:translateY(0);opacity:1;}
+    100%{transform:translateY(-400px);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="year">2026</div>
+
+    <h1>🎉 नए वर्ष की हार्दिक शुभकामनाएँ 🎉</h1>
+
+    <div class="message">
+        मेरी तरफ से आपको नया साल मुबारक हो
+    </div>
+
+    <div class="sender" id="senderName"></div>
+
+    <input type="text" id="nameInput" placeholder="अपना नाम यहाँ लिखें">
+
+    <div class="share">
+        <!-- WhatsApp -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" onclick="share('whatsapp')" alt="WhatsApp">
+        <!-- Instagram -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" onclick="share('instagram')" alt="Instagram">
+        <!-- Facebook -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" onclick="share('facebook')" alt="Facebook">
+    </div>
+</div>
+
+<script>
+// URL से भेजने वाले का नाम
+const params = new URLSearchParams(window.location.search);
+const sender = params.get("name");
+document.getElementById("senderName").innerText =
+    sender ? "— " + sender : "";
+
+// Share function
+function share(platform){
+    const name = document.getElementById("nameInput").value.trim();
+    if(!name){
+        alert("कृपया अपना नाम लिखें");
+        return;
+    }
+
+    const link = window.location.origin + window.location.pathname + "?name=" + encodeURIComponent(name);
+    const text = "🎉 नए वर्ष 2026 की हार्दिक शुभकामनाएँ 🎉\n" + name + " की तरफ से\n" + link;
+
+    let url = "";
+    if(platform === "whatsapp"){
+        url = "https://wa.me/?text=" + encodeURIComponent(text);
+    }else if(platform === "facebook"){
+        url = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(link);
+    }else if(platform === "instagram"){
+        alert("Instagram direct share allow नहीं करता.\nLink copy करके Instagram story / DM में paste करें.");
+        navigator.clipboard.writeText(text);
+        return;
+    }
+    window.open(url, "_blank");
+}
+
+// Fireworks
+for(let i=0;i<40;i++){
+    const f=document.createElement("div");
+    f.className="firework";
+    f.style.left=Math.random()*100+"%";
+    f.style.animationDelay=Math.random()*2+"s";
+    f.style.background=`hsl(${Math.random()*360},100%,70%)`;
+    document.body.appendChild(f);
+}
+</script>
+
+</body>
+</html>
